@@ -1,14 +1,13 @@
-// app/Providers/CronProvider.ts
-import { ApplicationContract } from '@ioc:Adonis/Core/Application'
-
-import Subscription from 'App/Models/Subscription'
+import { ApplicationService } from '@adonisjs/core/types'
+import cron from 'node-cron'
 import { DateTime } from 'luxon'
+import Subscription from '#models/subscription'
 
 export default class CronProvider {
-  constructor(protected app: ApplicationContract) {}
+  constructor(protected app: ApplicationService) {}
 
   public register() {
-    // Register your own bindings
+    // Registrar bindings, si hace falta
   }
 
   public async boot() {
@@ -24,27 +23,36 @@ export default class CronProvider {
     // Cleanup, since app is going down
   }
 
+  /**
+   * Define y arranca tus CRONs
+   */
   private startCronJobs() {
-    // 1) CRON para trial + gracia
+    // 1) CRON para revisar trial + periodo de gracia
     cron.schedule('0 1 * * *', async () => {
       await this.checkTrials()
     })
 
-    // 2) CRON para resetear coaching horas (p.ej día 1 del mes a las 00:05)
+    // 2) CRON para resetear horas de coaching (p.ej. día 1 del mes a las 00:05)
     cron.schedule('5 0 1 * *', async () => {
       await this.resetCoachingHours()
     })
   }
 
+  /**
+   * Verifica suscripciones en estado 'trialing' y las suspende
+   * si han superado el periodo de prueba + gracia (5 días).
+   */
   private async checkTrials() {
     console.log('checkTrials CRON running...')
+
     const now = DateTime.now()
     const trialSubs = await Subscription.query().where('status', 'trialing')
 
     for (const sub of trialSubs) {
       if (sub.trialEndsAt) {
-        const trialEnd = DateTime.fromSQL(sub.trialEndsAt) // o fromISO, depende el formato
-        const graceLimit = trialEnd.plus({ days: 5 })
+        // trialEndsAt es un objeto DateTime
+        const graceLimit = sub.trialEndsAt.plus({ days: 5 })
+
         if (now > graceLimit) {
           sub.status = 'suspended'
           await sub.save()
@@ -54,13 +62,19 @@ export default class CronProvider {
     }
   }
 
+  /**
+   * Resetea el coachingUsed a 0 para todas las suscripciones
+   * que estén 'active' o 'trialing', p.ej el día 1 de cada mes.
+   */
   private async resetCoachingHours() {
     console.log('resetCoachingHours CRON running...')
+
     const subs = await Subscription.query().whereIn('status', ['active', 'trialing'])
-    for (const s of subs) {
-      s.coachingUsed = 0
-      await s.save()
+    for (const sub of subs) {
+      sub.coachingUsed = 0
+      await sub.save()
     }
+
     console.log(`Reset coaching hours for ${subs.length} subscriptions`)
   }
 }

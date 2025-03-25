@@ -21,7 +21,8 @@ export default class Subscription extends BaseModel {
   @column()
   declare end_date: string | null
 
-  @column.dateTime({ columnName: 'trial_ends_at' }) declare trialEndsAt: DateTime | null
+  @column.dateTime({ columnName: 'trial_ends_at' })
+  declare trialEndsAt: DateTime | null
 
   @column()
   declare status: string

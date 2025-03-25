@@ -9,7 +9,7 @@ export default class AyudaIAController {
    * Lista todos los "encuestados" (sea User o Prospect) que tengan al menos
    * una respuesta en `responses` o una recomendación en `recommendations`.
    */
-  public async index({ response }: HttpContext) {
+  public async index({}: HttpContext) {
     try {
       // 1) PROSPECTS --------------------------------
       // Usa Prospect.query() y haz leftJoin con 'recommendations'.

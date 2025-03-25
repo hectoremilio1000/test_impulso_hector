@@ -3,10 +3,8 @@ import { loginValidator, registerValidator } from '#validators/auth'
 import type { HttpContext } from '@adonisjs/core/http'
 import Mail from '@adonisjs/mail/services/main'
 import { v4 as uuidv4 } from 'uuid'
-import { randomBytes } from 'node:crypto'
 
 import env from '#start/env'
-import { AccessTokenConfigExtended } from '../types/auth_config_extended.js'
 
 export default class AuthController {
   public async index({ response }: HttpContext) {

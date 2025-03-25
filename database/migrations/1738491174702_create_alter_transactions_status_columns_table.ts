@@ -9,11 +9,4 @@ export default class AlterTransactionsStatusColumn extends BaseSchema {
       table.string('status', 20).notNullable().alter()
     })
   }
-
-  public async down() {
-    this.schema.alterTable(this.tableName, (table) => {
-      // Si quieres revertir al estado anterior (por ejemplo, varchar(5))
-      // table.string('status', 5).notNullable().alter()
-    })
-  }
 }

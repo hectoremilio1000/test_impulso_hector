@@ -3,7 +3,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import SurveyResponse from '#models/survey_response'
 
 export default class SurveyResponsesController {
-  public async index({ auth, response }: HttpContext) {
+  public async index({ response }: HttpContext) {
     try {
       console.log('SurveyResponsesController.index => Entró a /api/survey-responses')
 

@@ -21,7 +21,7 @@ export default class SchedulerService {
           return
         }
 
-        await jobConfig.job.run()
+        await jobConfig.job.handle()
       } catch (e) {
         logger.error(`[Scheduler] - An error occurred during the execution of job ${jobConfig.key}`)
       } finally {

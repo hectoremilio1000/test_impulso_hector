@@ -46,7 +46,7 @@ export default class SubscriptionsController {
   }
 
   // GET /api/subscriptionbyuser/:id
-  public async subscriptionbyuser({ params, response }: HttpContext) {
+  public async subscriptionbyuser({ params }: HttpContext) {
     try {
       const subscription = await Subscription.query()
         .where('user_id', params.id)

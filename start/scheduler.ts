@@ -1,7 +1,6 @@
 import SchedulerService from '#services/scheduler_service'
 import HelloJob from '../app/jobs/hello_job.js'
 
-import locks from '@adonisjs/lock/services/main'
 import ResetLoyaltyCountersJob from '../app/jobs/reset_loyalty_counters_job.js'
 
 // Create an instance of the scheduler service on server startup

@@ -120,7 +120,7 @@ export default class PuntoVentaTicketsController {
   }
 
   // PUT /api/punto-venta-tickets/:id
-  public async update({ request, params, response }: HttpContext) {
+  public async update({ request, params }: HttpContext) {
     try {
       const ticket = await PuntoVentaTicket.findOrFail(params.id)
 

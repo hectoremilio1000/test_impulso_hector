@@ -139,7 +139,7 @@ export default class RrhhPreguntasController {
   }
   public async iniciarExamen({ request, response }: HttpContext) {
     try {
-      const { candidatoId, puesto, etapa } = request.body() // lo que mandas desde tu front
+      const { candidatoId } = request.body() // lo que mandas desde tu front
 
       // Genera un intentoId. Podrías también guardar esto en tu BD si quieres
       const intentoId = `intento-${Date.now()}-${candidatoId}-${nanoid(5)}`
@@ -162,7 +162,7 @@ export default class RrhhPreguntasController {
    */
   public async obtenerPreguntas({ request, response }: HttpContext) {
     try {
-      const { candidatoId, intentoId, puesto, etapa } = request.body()
+      const { puesto } = request.body()
 
       // 1. Identifica qué exam_id corresponde al puesto (ej. Mesero => exam_id=2)
       //    y también examenes psicométricos => 49, 50, 51, etc.
