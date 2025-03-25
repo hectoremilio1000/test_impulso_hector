@@ -1,6 +1,6 @@
 // app/jobs/ResetCoachingJob.ts
 import Subscription from '#models/subscription'
-import Plan from '#models/plan'
+
 import { BaseJob } from '../types/job.js'
 
 export default class ResetCoachingJob extends BaseJob {

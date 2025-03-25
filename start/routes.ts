@@ -45,7 +45,7 @@ const CandidatesController = () => import('#controllers/candidates_controller')
 const ExamsController = () => import('#controllers/exams_controller')
 
 // const TestMailController = () => import('#controllers/test_mails_controller')
-const SedesController = () => import('#controllers/sedes_controller')
+
 const ProspectsController = () => import('#controllers/prospects_controller')
 const SectionsController = () => import('#controllers/sections_controller')
 const PlansController = () => import('#controllers/plans_controller')
